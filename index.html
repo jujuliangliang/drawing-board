@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body style="width: 100%;height:100%;background-color: pink;display: flex;align-items: center;flex-direction: column;">
+    <canvas width="1300px" height="600px" style="border: 10px solid skyblue;background: #fff;margin-top: 20px;">您使用的浏览器不支持！请更换浏览器尝试。</canvas>
+    <div class="box" style="width: 1320px;height:80px;background-color: lawngreen;display: flex;justify-content: space-around;align-items: center;">
+        <input type="color">
+        <button class="huabi">画笔</button>
+        <button class="xpc">橡皮擦</button>
+        <button class="clear">清屏</button>
+        <p>线条<input type="number" value="10" min="1" max="50" style="width: 40px;">PX</p>
+    </div>
+</body>
+<script>
+    var canvas = document.querySelector('canvas');
+    var paint = canvas.getContext('2d');
+    var color = document.querySelector('input[type=color]');
+    var num = document.querySelector('input[type=number]');
+    console.log(color.value)
+    var tf1 = false;
+    var tf2 = false;
+    var bc = canvas.getBoundingClientRect();
+    var xpc = document.querySelector('.xpc');
+    var huabi = document.querySelector('.huabi');
+    var clear = document.querySelector('.clear');
+    var flag = 'huabi'
+    xpc.onclick = function() {
+        flag = 'xpc'
+    }
+    huabi.onclick = function() {
+        flag = 'huabi'
+    }
+    clear.onclick = function() {
+        paint.clearRect(0, 0, bc.width, bc.height);
+        flag = 'huabi';
+    }
+    canvas.onmousedown = function(e) {
+        if (flag == 'huabi') {
+            tf1 = true;
+            paint.beginPath();
+            paint.strokeStyle = color.value;
+            paint.lineWidth = num.value;
+            paint.moveTo(e.x - bc.left - 10, e.y - bc.top - 10);
+            canvas.onmousemove = function(ev) {
+                if (tf1) {
+                    ev = ev || window.event
+                    console.log(ev)
+
+                    paint.lineTo(ev.clientX - bc.left - 10, ev.clientY - bc.top - 10);
+                    paint.stroke();
+                }
+            }
+            canvas.onmouseup = function() {
+                tf1 = false;
+                paint.closePath();
+            }
+            canvas.onmouseleave = function() {
+                tf1 = false;
+                paint.closePath();
+            }
+        } else if (flag == 'xpc') {
+            tf2 = true;
+            paint.clearRect(e.x - bc.left - 35, e.y - bc.top - 35, 50, 50);
+            canvas.onmousemove = function(ev) {
+                if (tf2) paint.clearRect(ev.x - bc.left - 35, ev.y - bc.top - 35, 50, 50);
+            }
+            canvas.onmouseup = function() {
+                tf2 = false;
+                paint.closePath();
+            }
+            canvas.onmouseleave = function() {
+                tf2 = false;
+                paint.closePath();
+            }
+        }
+
+    }
+</script>
+
+</html>
