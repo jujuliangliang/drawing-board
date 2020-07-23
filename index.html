@@ -10,6 +10,10 @@
             margin: 0;
             padding: 0;
         }
+        
+        button {
+            width: 50px;
+        }
     </style>
 </head>
 
@@ -34,17 +38,24 @@
     var bc = canvas.getBoundingClientRect();
     var xpc = document.querySelector('.xpc');
     var huabi = document.querySelector('.huabi');
+    huabi.style = 'background:#123;color:#fff;';
     var clear = document.querySelector('.clear');
     var flag = 'huabi'
     xpc.onclick = function() {
-        flag = 'xpc'
+        flag = 'xpc';
+        xpc.style = 'background:#123;color:#fff;';
+        huabi.style = '';
     }
     huabi.onclick = function() {
-        flag = 'huabi'
+        flag = 'huabi';
+        xpc.style = '';
+        huabi.style = 'background:#123;color:#fff;';
     }
     clear.onclick = function() {
         paint.clearRect(0, 0, bc.width, bc.height);
         flag = 'huabi';
+        xpc.style = '';
+        huabi.style = 'background:#123;color:#fff;';
     }
     canvas.onmousedown = function(e) {
         if (flag == 'huabi') {
