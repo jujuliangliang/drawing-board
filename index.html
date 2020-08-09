@@ -73,11 +73,11 @@
                     paint.stroke();
                 }
             }
-            canvas.onmouseup = function() {
+            document.onmouseup = function() {
                 tf1 = false;
                 paint.closePath();
             }
-            canvas.onmouseleave = function() {
+            document.onmouseleave = function() {
                 tf1 = false;
                 paint.closePath();
             }
@@ -87,11 +87,11 @@
             canvas.onmousemove = function(ev) {
                 if (tf2) paint.clearRect(ev.x - bc.left - 35, ev.y - bc.top - 35, 50, 50);
             }
-            canvas.onmouseup = function() {
+            document.onmouseup = function() {
                 tf2 = false;
                 paint.closePath();
             }
-            canvas.onmouseleave = function() {
+            document.onmouseleave = function() {
                 tf2 = false;
                 paint.closePath();
             }
